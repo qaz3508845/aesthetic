@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拾作審美練習</title>
+<style>
+:root{
+  --bg:#0b0d10;--surface:#12161b;--surface2:#171c22;--line:#222a33;--line2:#2c3540;
+  --text:#e7eaee;--muted:#8b95a1;--dim:#5f6873;--accent:#2f8cff;--accent-soft:rgba(47,140,255,.14);
+  --good:#3ccf91;--warn:#f2b84b;--bad:#ef6b6b;--r:14px;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:120px}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei",system-ui,sans-serif;
+  font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 80px}
+/* 頂部 */
+header.top{position:sticky;top:0;z-index:20;background:rgba(11,13,16,.88);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topin{max-width:1120px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px}
+.brand{font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.brand small{color:var(--muted);font-weight:500;margin-left:6px}
+nav.tabs{display:flex;gap:4px;margin-left:auto;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+nav.tabs a{color:var(--muted);padding:6px 14px;border-radius:999px;font-size:14px;white-space:nowrap}
+nav.tabs a.on{background:var(--accent);color:#fff}
+@media(max-width:640px){
+  .topin{flex-direction:column;align-items:stretch;gap:10px;padding:10px 12px}
+  nav.tabs{margin-left:0}
+  nav.tabs a{flex:1;text-align:center;padding:7px 0}
+  .wrap{padding:0 12px 80px}
+}
+/* 通用 */
+.hero{padding:26px 0 8px}
+.eyebrow{color:var(--accent);font-size:13px;font-weight:600;letter-spacing:.04em}
+h1{font-size:26px;line-height:1.3;margin:6px 0 8px}
+h2{font-size:19px;margin:0 0 6px}
+h3{font-size:14px;color:var(--muted);font-weight:600;margin:18px 0 6px;letter-spacing:.03em}
+.muted{color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--muted);font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;font-size:12px;
+  border:1px solid var(--line2);color:var(--muted);background:var(--surface2);white-space:nowrap}
+.chip.acc{border-color:rgba(47,140,255,.45);color:#9cc7ff;background:var(--accent-soft)}
+.chip.st-收藏{color:#cfd6de}.chip.st-試用{color:var(--warn);border-color:rgba(242,184,75,.4)}
+.chip.st-採用{color:var(--good);border-color:rgba(60,207,145,.45)}.chip.st-淘汰{color:var(--bad);border-color:rgba(239,107,107,.4)}
+.progress{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:14px;max-width:320px}
+.progress i{display:block;height:100%;background:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-top:18px}
+@media(max-width:640px){.card{padding:16px}h1{font-size:22px}}
+.card-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700;color:var(--accent);font-size:14px}
+.q{font-size:16px;margin:8px 0 4px}
+ul.lines{margin:4px 0 0;padding-left:18px}ul.lines li{margin:3px 0}
+.note{font-size:13px;color:var(--muted);border-left:2px solid var(--line2);padding-left:10px;margin-top:14px}
+/* 影片 */
+.clips{display:grid;gap:12px;margin-top:14px}
+.clips.two{grid-template-columns:1fr 1fr}
+.clips.one{max-width:720px}
+@media(max-width:720px){.clips.two{grid-template-columns:1fr}}
+.clip{background:var(--surface2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.clip.picked{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.player{position:relative;aspect-ratio:16/9;background:#000 center/cover no-repeat}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.player .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.55))}
+.player .play span{width:56px;height:56px;border-radius:50%;background:rgba(47,140,255,.95);display:flex;
+  align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+.player .play span:after{content:"";border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.player .tc{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.72);font-size:12px;padding:1px 7px;border-radius:6px;
+  font-family:ui-monospace,Menlo,monospace}
+.cliplab{display:flex;gap:8px;align-items:baseline;padding:10px 12px}
+.cliplab b{color:var(--accent);white-space:nowrap}
+.cliplab .t{font-size:13px;overflow:hidden;text-overflow:ellipsis}
+.cliplab .t em{font-style:normal;color:var(--muted)}
+.cliplab a{margin-left:auto;font-size:12px;white-space:nowrap;color:var(--muted)}
+/* 表單 */
+.answer-box{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+.focus{margin:8px 0 12px;padding:12px 14px;border-radius:12px;background:#1b1f26;border:1px solid var(--line2);border-left:4px solid var(--warn)}
+.focus b{display:block;font-size:12px;color:var(--warn);letter-spacing:.04em;margin-bottom:2px}
+.focus div{font-size:16px;font-weight:600;line-height:1.55;color:var(--text)}
+.score-hint{font-size:13px;color:var(--warn);margin:-2px 0 8px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{background:var(--surface2);border:1px solid var(--line2);border-radius:10px;padding:8px 14px;min-width:64px}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.seg button.bad.on{background:#3a1d20;border-color:var(--bad);color:#ffb3b3}
+.seg.score button{flex:1;min-width:0;padding:10px 6px;text-align:center}
+.seg.score button small{display:block;font-size:11px;opacity:.75}
+textarea,input[type=text]{width:100%;background:#0e1115;border:1px solid var(--line2);border-radius:10px;color:var(--text);
+  font:inherit;padding:10px 12px;resize:vertical}
+textarea:focus,input:focus{outline:none;border-color:var(--accent)}
+.row{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.btn{background:var(--accent);border:0;border-radius:10px;color:#fff;padding:10px 18px;font-weight:600}
+.btn[disabled]{opacity:.5;cursor:default}
+.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--text)}
+.saved{font-size:13px;color:var(--good)}
+.err{font-size:13px;color:var(--bad)}
+.lock{background:var(--surface2);border:1px dashed var(--line2);border-radius:12px;padding:14px;color:var(--muted);margin-top:14px}
+.reveal{background:linear-gradient(180deg,rgba(47,140,255,.08),transparent);border:1px solid rgba(47,140,255,.3);border-radius:12px;padding:14px 16px;margin-top:16px}
+.myans{background:var(--surface2);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:14px}
+/* 歷史 */
+.filters{display:flex;flex-direction:column;gap:10px;margin:18px 0 6px}
+.frow{display:flex;gap:8px;align-items:center;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.frow::-webkit-scrollbar{display:none}
+.frow .lab{color:var(--dim);font-size:12px;min-width:34px}
+.fbtn{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--muted);white-space:nowrap}
+.fbtn.on{background:var(--accent-soft);border-color:var(--accent);color:#cfe3ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:14px}
+@media(max-width:640px){.grid{grid-template-columns:1fr 1fr;gap:10px}}
+.tile{color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-align:left;padding:0;display:flex;flex-direction:column}
+.tile:hover{border-color:var(--line2)}
+.tile .th{aspect-ratio:16/9;background:#000 center/cover no-repeat;position:relative}
+.tile .th .sc{position:absolute;left:8px;top:8px}
+.tile .bd{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px}
+.tile .tt{font-size:14px;font-weight:600;line-height:1.4}
+.score-badge{display:inline-block;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:700;background:rgba(0,0,0,.75);color:#fff}
+.score-badge.s3{background:var(--accent)}.score-badge.s0{background:#5a2a2e}
+.score-badge.none{background:rgba(0,0,0,.6);color:#aab3bd;font-weight:500}
+@media(max-width:640px){.tile .bd{padding:8px 10px 10px}.tile .tt{font-size:13px}.tile .meta .chip:nth-child(n+3){display:none}}
+.empty{color:var(--muted);text-align:center;padding:40px 0}
+.back{display:inline-block;margin-top:18px;color:var(--muted);font-size:14px}
+/* 我的審美 */
+.road{position:relative;margin-top:14px;padding-left:22px}
+.road:before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),rgba(47,140,255,.1))}
+.step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.step:before{content:"";position:absolute;left:-21px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.step .el{font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.stat .n{font-size:26px;font-weight:700;line-height:1.2}
+.stat .l{font-size:12px;color:var(--muted)}
+.bars{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.bar{display:grid;grid-template-columns:96px 1fr 64px;gap:10px;align-items:center;font-size:13px}
+.bar .tr{height:8px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--accent);border-radius:6px}
+.bar .v{color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.two-col{grid-template-columns:1fr}}
+.loading{padding:60px 0;text-align:center;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#1b222b;border:1px solid var(--line2);
+  padding:8px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <div class="brand">拾作審美練習<small>Gather &amp; Make</small></div>
+  <nav class="tabs">
+    <a href="#today" data-v="today">今日</a>
+    <a href="#history" data-v="history">歷史</a>
+    <a href="#taste" data-v="taste">我的審美</a>
+  </nav>
+</div></header>
+<main class="wrap" id="app"><div class="loading">載入中…</div></main>
+<div class="toast" id="toast"></div>
+<script>
+/* v3 GitHub Pages 版:資料存在 Google 試算表，透過 Apps Script 網頁應用程式的 JSON API 讀寫 */
+var API_URL='https://script.google.com/macros/s/AKfycby3mo0TCoLm_VhK-3bvIti7Mp6b269avp-EuYtMrmkJiGz_UuJ2240UOUsDVA3Rq7a9_g/exec';
+(function(){
+var S={items:[],responses:{},taste:[],key:'',view:'today',draft:{},filters:{level:'',score:'',status:'',replied:''}};
+var SCORE={0:'不喜歡',1:'喜歡',2:'想試',3:'必用'};
+var LEVELS=['L1 結構','L2 畫面系統','L3 動態','L4 聲音','L5 包裝'];
+var STATUSES=['收藏','試用','採用','淘汰'];
+var app=document.getElementById('app');
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function lines(s){var a=String(s||'').split(/\n+/).map(function(x){return x.trim()}).filter(String);
+  if(!a.length)return'';if(a.length===1)return'<div>'+esc(a[0])+'</div>';
+  return'<ul class="lines">'+a.map(function(x){return'<li>'+esc(x)+'</li>'}).join('')+'</ul>'}
+function tc(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove('show')},1800)}
+function lvShort(l){return String(l||'').split(' ')[0]}
+function resp(id){return S.responses[id]||null}
+function replied(id){var r=resp(id);return !!(r&&r.score!==null&&r.score!==undefined&&r.score!=='')}
+function statusOf(it){if(it.status)return it.status;var r=resp(it.id);if(replied(it.id))return Number(r.score)===0?'淘汰':'收藏';return''}
+function isGuess(it){return /猜/.test(it.type)}
+function isAB(it){return /A\s*\/\s*B/i.test(it.type)}
+function guessed(it){var r=resp(it.id);return !!(r&&r.guess)}
+/* ---------- API (取代 Apps Script 內建呼叫) ---------- */
+function unwrap(j){if(!j||typeof j!=='object')throw new Error('伺服器回應格式不對');if(!j.ok)throw new Error(j.error||'伺服器錯誤');return j.data}
+function jsonp(url){return new Promise(function(ok,no){
+  var cb='__aes_cb'+Date.now()+Math.floor(Math.random()*1e4),sc=document.createElement('script'),t=setTimeout(function(){done();no(new Error('連線逾時'))},20000);
+  function done(){clearTimeout(t);try{delete window[cb]}catch(e){window[cb]=undefined}if(sc.parentNode)sc.parentNode.removeChild(sc)}
+  window[cb]=function(j){done();try{ok(unwrap(j))}catch(e){no(e)}};
+  sc.onerror=function(){done();no(new Error('連不上伺服器'))};
+  sc.src=url+'&callback='+cb;document.head.appendChild(sc)})}
+function apiGet(action,k){
+  var url=API_URL+'?action='+encodeURIComponent(action)+'&k='+encodeURIComponent(k||'')+'&_='+Date.now();
+  // fetch 失敗 (網路或 CORS) 或回來不是 JSON 時，改用 JSONP 再試一次;伺服器明確回錯誤 (例如金鑰不對) 就直接顯示
+  return fetch(url,{method:'GET',cache:'no-store',redirect:'follow',credentials:'omit'})
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+    .then(function(j){return{j:j}},function(){return jsonp(url).then(function(d){return{d:d}})})
+    .then(function(x){return 'd' in x?x.d:unwrap(x.j)})}
+function apiPost(action,k,payload){
+  return fetch(API_URL,{method:'POST',redirect:'follow',credentials:'omit',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:action,k:k||'',payload:payload})})
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(unwrap)}
+function call(fn){var args=[].slice.call(arguments,1);
+  if(fn==='api_getData')return apiGet('getData',args[0]);
+  if(fn==='api_saveResponse')return apiPost('saveResponse',args[0],args[1]);
+  return Promise.reject(new Error('未知的動作 '+fn))}
+
+/* ---------- 影片 ---------- */
+function clipHTML(it,c,i){
+  var picked=isAB(it)&&cur(it).choice===c.label;
+  var thumb='https://i.ytimg.com/vi/'+encodeURIComponent(c.videoId)+'/hqdefault.jpg';
+  var range=tc(c.start)+(c.end!=null?'–'+tc(c.end):'');
+  var yt='https://www.youtube.com/watch?v='+encodeURIComponent(c.videoId)+'&t='+(c.start||0)+'s';
+  return '<div class="clip'+(picked?' picked':'')+'">'+
+    '<div class="player" style="background-image:url(\''+thumb+'\')" data-vid="'+esc(c.videoId)+'" data-s="'+(c.start||0)+'" data-e="'+(c.end==null?'':c.end)+'">'+
+      '<button class="play" aria-label="播放 '+esc(c.label)+'"><span></span></button><div class="tc">'+range+'</div></div>'+
+    '<div class="cliplab"><b>'+esc(c.label)+'</b><div class="t">'+esc(c.title)+(c.channel?' <em>('+esc(c.channel)+')</em>':'')+'</div>'+
+    '<a href="'+yt+'" target="_blank" rel="noopener">YouTube</a></div></div>'}
+function clipsHTML(it,list){if(!list.length)return'';return'<div class="clips'+(list.length>1?' two':' one')+'">'+list.map(function(c,i){return clipHTML(it,c,i)}).join('')+'</div>'}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.player .play');if(!b)return;
+  var p=b.parentNode,v=p.getAttribute('data-vid'),s=p.getAttribute('data-s'),en=p.getAttribute('data-e');
+  var src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v)+'?autoplay=1&playsinline=1&rel=0&modestbranding=1&cc_load_policy=1&start='+s+(en?'&end='+en:'');
+  p.innerHTML='<iframe src="'+src+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+});
+
+/* ---------- 回覆表單狀態 ---------- */
+function cur(it){
+  if(!S.draft[it.id]){var r=resp(it.id)||{};S.draft[it.id]={score:(r.score===null||r.score===undefined)?null:Number(r.score),choice:r.choice||'',guess:r.guess||'',reason:r.reason||'',editing:!replied(it.id)}}
+  return S.draft[it.id]}
+
+function itemCard(it,opts){
+  opts=opts||{};var d=cur(it),r=resp(it.id),st=statusOf(it);
+  var locked=isGuess(it)&&!guessed(it);
+  var visible=it.clips.filter(function(c){return !c.reveal}),hidden=it.clips.filter(function(c){return c.reveal});
+  var h='<article class="card" id="card-'+esc(it.id)+'">'+
+    '<div class="card-head"><span class="code">'+esc(it.id)+'</span><span class="chip acc">'+esc(it.type)+'</span>'+
+    '<span class="chip">'+esc(it.level)+'</span>'+(st?'<span class="chip st-'+esc(st)+'">'+esc(st)+'</span>':'')+
+    (opts.showDate?'<span class="chip">'+esc(it.date)+'</span>':'')+'</div>'+
+    '<div class="focus"><b>這題在比什麼</b><div>'+esc(focusOf(it))+'</div></div>'+
+    '<h2>'+esc(it.title)+'</h2>'+(opts.showDate&&it.topic?'<div class="meta">'+esc(it.topic)+'</div>':'')+
+    '<div class="q">'+esc(it.question)+'</div>'+clipsHTML(it,visible);
+  if(locked){
+    h+='<div class="lock">答案、原理和參數先藏起來，看完片段把你的猜測寫下來再揭曉</div>'+
+      '<div class="answer-box"><h3 style="margin-top:0">你的猜測</h3>'+
+      '<textarea rows="2" data-f="guess" data-id="'+esc(it.id)+'" placeholder="例如:大概第 20 秒，把觀眾自己拉進例子裡">'+esc(d.guess)+'</textarea>'+
+      '<div class="row"><button class="btn" data-act="guess" data-id="'+esc(it.id)+'">送出猜測，看答案</button><span class="msg" data-msg="'+esc(it.id)+'"></span></div></div>';
+  }else{
+    if(isGuess(it)){
+      h+='<div class="reveal"><h3 style="margin-top:0">答案</h3>'+lines(it.answer)+
+        (r&&r.guess?'<div class="myans"><span class="muted">你猜:</span>'+esc(r.guess)+'</div>':'')+'</div>'+clipsHTML(it,hidden);
+    }
+    if(it.principle)h+='<h3>原理</h3>'+lines(it.principle);
+    if(it.params)h+='<h3>參數</h3>'+lines(it.params);
+    if(it.useCase)h+='<h3>適合用在</h3>'+lines(it.useCase);
+    if(it.usedIn)h+='<h3>用在哪支影片</h3>'+lines(it.usedIn);
+    if(it.note)h+='<div class="note">'+esc(it.note)+'</div>';
+    h+=answerBox(it);
+  }
+  return h+'</article>'}
+
+var FOCUS_FALLBACK={
+  '正反例':'這題在比正例和反例用的同一招，你要打分的是:要不要把正例那招用在你的影片',
+  'A/B 對比':'這題在比 A、B 兩種做法，先選比較想用的那個，再打分:要不要把它用在你的影片',
+  '先猜':'這題在比影片裡藏的一招，猜完看答案，再打分:要不要把這招用在你的影片'};
+function focusOf(it){var f=String(it.focus||'').trim();if(f)return f;
+  return FOCUS_FALLBACK[isAB(it)?'A/B 對比':isGuess(it)?'先猜':'正反例']||'你要打分的是這一招:要不要把它用在你的影片，不是在評影片好不好看'}
+function answerBox(it){
+  var d=cur(it),r=resp(it.id),id=esc(it.id);
+  if(replied(it.id)&&!d.editing){
+    return '<div class="answer-box"><h3 style="margin-top:0">你的選擇</h3><div class="myans">'+
+      (isAB(it)&&r.choice?'<div><span class="muted">選:</span>'+esc(r.choice)+'</div>':'')+
+      '<div><span class="muted">這招的分數:</span>'+(Number(r.score)===0?'不喜歡':esc(r.score)+' '+SCORE[r.score])+'</div>'+
+      (r.reason?'<div><span class="muted">理由:</span>'+esc(r.reason)+'</div>':'')+
+      '<div class="muted" style="font-size:12px;margin-top:4px">'+esc(r.updatedAt)+' (台北時間)</div></div>'+
+      '<div class="row"><button class="btn ghost" data-act="edit" data-id="'+id+'">修改</button></div></div>'}
+  var h='<div class="answer-box">';
+  if(isAB(it)){
+    h+='<h3 style="margin-top:0">你選哪一個</h3><div class="seg" data-g="choice" data-id="'+id+'">'+
+      it.clips.filter(function(c){return !c.reveal}).map(function(c){return'<button data-v="'+esc(c.label)+'" class="'+(d.choice===c.label?'on':'')+'">'+esc(c.label)+'</button>'}).join('')+'</div>'}
+  h+='<h3'+(isAB(it)?'':' style="margin-top:0"')+'>打分</h3><div class="score-hint">對這招打分 (不是對影片):要不要用在你的影片?</div><div class="seg score" data-g="score" data-id="'+id+'">'+
+    [0,1,2,3].map(function(n){return'<button data-v="'+n+'" class="'+(n===0?'bad ':'')+(d.score===n?'on':'')+'">'+(n===0?'不喜歡<small>淘汰</small>':n+'<small>'+SCORE[n]+'</small>')+'</button>'}).join('')+'</div>'+
+    '<h3>一句理由</h3><input type="text" data-f="reason" data-id="'+id+'" maxlength="300" placeholder="例如:5 秒內一定要丟問題" value="'+esc(d.reason)+'">'+
+    '<div class="row"><button class="btn" data-act="save" data-id="'+id+'">'+(replied(it.id)?'更新':'送出')+'</button>'+
+    (replied(it.id)?'<button class="btn ghost" data-act="cancel" data-id="'+id+'">取消</button>':'')+
+    '<span class="msg" data-msg="'+id+'"></span></div></div>';
+  return h}
+
+function byId(id){for(var i=0;i<S.items.length;i++)if(S.items[i].id===id)return S.items[i];return null}
+function rerenderCard(id,opts){var el=document.getElementById('card-'+id),it=byId(id);if(!el||!it)return;
+  var tmp=document.createElement('div');tmp.innerHTML=itemCard(it,{showDate:S.view!=='today'});el.parentNode.replaceChild(tmp.firstChild,el)}
+
+app.addEventListener('input',function(e){var f=e.target.getAttribute('data-f');if(!f)return;var it=byId(e.target.getAttribute('data-id'));if(it)cur(it)[f]=e.target.value});
+app.addEventListener('click',function(e){
+  var sb=e.target.closest('.seg button');
+  if(sb){var g=sb.parentNode,it=byId(g.getAttribute('data-id')),key=g.getAttribute('data-g'),v=sb.getAttribute('data-v');
+    cur(it)[key]=key==='score'?Number(v):v;rerenderCard(it.id);return}
+  var b=e.target.closest('[data-act]');if(!b)return;
+  var act=b.getAttribute('data-act'),id=b.getAttribute('data-id'),it=byId(id),d=it&&cur(it);
+  if(act==='edit'){d.editing=true;rerenderCard(id);return}
+  if(act==='cancel'){delete S.draft[id];rerenderCard(id);return}
+  if(act==='guess'){if(!d.guess.trim()){msg(id,'先寫下你的猜測','err');return}
+    save(id,{id:id,guess:d.guess.trim()},b,'已記下猜測');return}
+  if(act==='save'){
+    if(isAB(it)&&!d.choice){msg(id,'先選 A 或 B','err');return}
+    if(d.score===null||d.score===undefined){msg(id,'先選一個分數','err');return}
+    var p={id:id,score:d.score,reason:d.reason.trim()};if(isAB(it))p.choice=d.choice;
+    save(id,p,b,'已記錄')}
+});
+function msg(id,t,cls){var m=app.querySelector('[data-msg="'+id+'"]');if(m){m.className='msg '+(cls||'');m.textContent=t}}
+function save(id,payload,btn,okText){
+  btn.disabled=true;btn.textContent='儲存中…';
+  call('api_saveResponse',S.key,payload).then(function(r){
+    S.responses[id]=r;delete S.draft[id];rerenderCard(id);toast(okText);if(S.view==='today')renderTodayProgress()
+  }).catch(function(err){btn.disabled=false;btn.textContent='再試一次';msg(id,'沒存到:'+(err.message||err),'err')})}
+
+/* ---------- 頁面 ---------- */
+function latestDate(){return S.items.reduce(function(m,it){return it.date>m?it.date:m},'')}
+function todayItems(){var d=latestDate();return S.items.filter(function(it){return it.date===d}).sort(function(a,b){return a.id<b.id?-1:1})}
+function renderTodayProgress(){var list=todayItems(),n=list.filter(function(it){return replied(it.id)}).length;
+  var el=document.getElementById('prog');if(el)el.innerHTML='已回覆 '+n+'/'+list.length+'<div class="progress"><i style="width:'+(list.length?n/list.length*100:0)+'%"></i></div>'}
+function renderToday(){
+  var list=todayItems();
+  if(!list.length){app.innerHTML='<div class="empty">還沒有練習，晚上 20:00 會推第一份</div>';return}
+  var f=list[0];
+  app.innerHTML='<section class="hero"><div class="eyebrow">'+esc(f.date)+(f.dayTitle?'，'+esc(f.dayTitle):'')+'</div>'+
+    '<h1>'+esc(f.level)+':'+esc(f.topic)+'</h1>'+(f.intro?'<div class="muted">'+esc(f.intro)+'</div>':'')+
+    '<div class="meta" id="prog" style="margin-top:12px;display:block"></div></section>'+
+    list.map(function(it){return itemCard(it)}).join('');
+  renderTodayProgress()}
+
+function scoreKey(it){var r=resp(it.id);return replied(it.id)?String(Number(r.score)):'none'}
+function renderHistory(){
+  var F=S.filters;
+  function fr(lab,key,opts){return'<div class="frow"><span class="lab">'+lab+'</span>'+opts.map(function(o){
+    return'<button class="fbtn'+(F[key]===o[0]?' on':'')+'" data-fk="'+key+'" data-fv="'+esc(o[0])+'">'+esc(o[1])+'</button>'}).join('')+'</div>'}
+  var levelsInData=LEVELS.slice();S.items.forEach(function(it){if(it.level&&levelsInData.indexOf(it.level)<0)levelsInData.push(it.level)});
+  var list=S.items.filter(function(it){
+    if(F.level&&it.level!==F.level)return false;
+    if(F.score&&scoreKey(it)!==F.score)return false;
+    if(F.status&&statusOf(it)!==F.status)return false;
+    if(F.replied==='yes'&&!replied(it.id))return false;
+    if(F.replied==='no'&&replied(it.id))return false;
+    return true}).sort(function(a,b){return a.date===b.date?(a.id<b.id?1:-1):(a.date<b.date?1:-1)});
+  var h='<section class="hero"><div class="eyebrow">全部 '+S.items.length+' 項，已回覆 '+S.items.filter(function(it){return replied(it.id)}).length+' 項</div><h1>歷史紀錄</h1></section>'+
+    '<div class="filters">'+
+    fr('層級','level',[['','全部']].concat(levelsInData.map(function(l){return[l,l]})))+
+    fr('分數','score',[['','全部'],['3','3 必用'],['2','2 想試'],['1','1 喜歡'],['0','不喜歡'],['none','未評分']])+
+    fr('狀態','status',[['','全部']].concat(STATUSES.map(function(s){return[s,s]})))+
+    fr('回覆','replied',[['','全部'],['no','未回覆'],['yes','已回覆']])+'</div>';
+  if(!list.length)h+='<div class="empty">沒有符合條件的項目</div>';
+  else h+='<div class="grid">'+list.map(function(it){
+    var c=it.clips.filter(function(x){return !x.reveal})[0]||it.clips[0],r=resp(it.id),st=statusOf(it);
+    var badge=replied(it.id)?'<span class="score-badge s'+Number(r.score)+'">'+(Number(r.score)===0?'不喜歡':r.score+' '+SCORE[r.score])+'</span>':'<span class="score-badge none">未回覆</span>';
+    return'<a class="tile" href="#item/'+encodeURIComponent(it.id)+'"><div class="th" style="background-image:url(\''+(c?'https://i.ytimg.com/vi/'+encodeURIComponent(c.videoId)+'/hqdefault.jpg':'')+'\')"><span class="sc">'+badge+'</span></div>'+
+      '<div class="bd"><div class="meta"><span class="code">'+esc(it.id)+'</span><span>'+esc(it.date.slice(5))+'</span></div>'+
+      '<div class="tt">'+esc(it.title)+'</div><div class="meta"><span class="chip">'+esc(lvShort(it.level))+'</span><span class="chip acc">'+esc(it.type)+'</span>'+(st?'<span class="chip st-'+esc(st)+'">'+esc(st)+'</span>':'')+'</div></div></a>'}).join('')+'</div>';
+  app.innerHTML=h}
+document.addEventListener('click',function(e){var b=e.target.closest('.fbtn');if(!b)return;
+  var k=b.getAttribute('data-fk'),v=b.getAttribute('data-fv');S.filters[k]=S.filters[k]===v?'':v;renderHistory()});
+
+function renderItem(id){var it=byId(id);
+  if(!it){app.innerHTML='<a class="back" href="#history">← 回歷史</a><div class="empty">找不到 '+esc(id)+'</div>';return}
+  app.innerHTML='<a class="back" href="#history">← 回歷史</a>'+itemCard(it,{showDate:true})}
+
+function avg(a){return a.length?a.reduce(function(s,x){return s+x},0)/a.length:0}
+function renderTaste(){
+  var all=S.items,rep=all.filter(function(it){return replied(it.id)});
+  var scores=rep.map(function(it){return Number(resp(it.id).score)});
+  var h='<section class="hero"><div class="eyebrow">從你的打分累積出來</div><h1>我的審美</h1></section>';
+  if(S.taste.length){
+    var t=S.taste.slice().sort(function(a,b){return(a.order||0)-(b.order||0)});
+    var upd=t.reduce(function(m,x){return x.updatedAt>m?x.updatedAt:m},'');
+    h+='<div class="card" style="margin-top:6px"><h2>風格道路</h2><div class="meta">'+t.length+' 個元素'+(upd?'，更新於 '+esc(upd):'')+'</div><div class="road">'+
+      t.map(function(x){return'<div class="step"><div class="card-head"><span class="el">'+esc(x.element)+'</span>'+(x.level?'<span class="chip">'+esc(x.level)+'</span>':'')+(x.version?'<span class="chip acc">'+esc(x.version)+'</span>':'')+'</div>'+
+        lines(x.rule)+'<div class="meta" style="margin-top:8px">'+(x.basedOn.length?'依據 '+x.basedOn.map(function(b){return'<a href="#item/'+encodeURIComponent(b)+'">'+esc(b)+'</a>'}).join('，'):'')+
+        (x.updatedAt?'<span style="margin-left:auto">'+esc(x.updatedAt)+'</span>':'')+'</div></div>'}).join('')+'</div></div>';
+  }
+  h+='<div class="stats">'+
+    '<div class="stat"><div class="n">'+all.length+'</div><div class="l">推過的項目</div></div>'+
+    '<div class="stat"><div class="n">'+(all.length?Math.round(rep.length/all.length*100):0)+'%</div><div class="l">回覆率 ('+rep.length+'/'+all.length+')</div></div>'+
+    '<div class="stat"><div class="n">'+(scores.length?avg(scores).toFixed(1):'–')+'</div><div class="l">平均分 (不喜歡算 0)</div></div>'+
+    '<div class="stat"><div class="n">'+scores.filter(function(s){return s===3}).length+'</div><div class="l">必用</div></div></div>';
+  var lv=LEVELS.slice();all.forEach(function(it){if(it.level&&lv.indexOf(it.level)<0)lv.push(it.level)});
+  var lvRows=lv.map(function(l){var its=all.filter(function(it){return it.level===l}),sc=its.filter(function(it){return replied(it.id)}).map(function(it){return Number(resp(it.id).score)});
+    return{l:l,n:its.length,avg:sc.length?avg(sc):null,c:sc.length}}).filter(function(x){return x.n});
+  var types={};all.forEach(function(it){var k=it.type||'其他';types[k]=types[k]||{n:0,sc:[]};types[k].n++;if(replied(it.id))types[k].sc.push(Number(resp(it.id).score))});
+  var dist=[3,2,1,0].map(function(n){return{n:n,c:scores.filter(function(s){return s===n}).length}});
+  h+='<div class="two-col"><div class="card"><h2>各層級平均分</h2><div class="bars">'+
+    (lvRows.length?lvRows.map(function(x){return'<div class="bar"><span>'+esc(x.l)+'</span><div class="tr"><i style="width:'+(x.avg===null?0:x.avg/3*100)+'%"></i></div><span class="v">'+(x.avg===null?'未評':x.avg.toFixed(1))+' ('+x.c+'/'+x.n+')</span></div>'}).join(''):'<div class="muted">還沒有資料</div>')+
+    '</div></div><div class="card"><h2>題型分佈</h2><div class="bars">'+
+    Object.keys(types).map(function(k){var x=types[k];return'<div class="bar"><span>'+esc(k)+'</span><div class="tr"><i style="width:'+(x.n/all.length*100)+'%"></i></div><span class="v">'+x.n+' 項'+(x.sc.length?'，'+avg(x.sc).toFixed(1):'')+'</span></div>'}).join('')+
+    '</div></div></div>'+
+    '<div class="card"><h2>分數分佈</h2><div class="bars">'+dist.map(function(x){return'<div class="bar"><span>'+(x.n===0?'不喜歡':x.n+' '+SCORE[x.n])+'</span><div class="tr"><i style="width:'+(scores.length?x.c/scores.length*100:0)+'%"></i></div><span class="v">'+x.c+'</span></div>'}).join('')+'</div>'+
+    (scores.length?'':'<div class="muted" style="margin-top:10px;font-size:13px">回覆幾項之後這裡就會開始有數字</div>')+'</div>';
+  app.innerHTML=h}
+
+/* ---------- 路由 (改用網址 #) ---------- */
+function go(h,push){h=h||'today';if(push===false&&h===S.hash&&S.routed)return;S.hash=h;
+  if(push!==false&&location.hash.slice(1)!==h)try{history.pushState(null,'','#'+h)}catch(e){location.hash=h}
+  S.routed=true;route()}
+document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();go(a.getAttribute('href').slice(1))});
+function onNav(){if(S.loaded)go(decodeURIComponent(location.hash.slice(1))||'today',false)}
+window.addEventListener('popstate',onNav);window.addEventListener('hashchange',onNav);
+function route(){
+  var hsh=S.hash||'today',parts=hsh.split('/');
+  S.view=parts[0]==='item'?'item':(['today','history','taste'].indexOf(parts[0])>=0?parts[0]:'today');
+  [].forEach.call(document.querySelectorAll('nav.tabs a'),function(a){a.classList.toggle('on',a.getAttribute('data-v')===(S.view==='item'?'history':S.view))});
+  if(S.view==='today')renderToday();else if(S.view==='history')renderHistory();else if(S.view==='taste')renderTaste();else renderItem(decodeURIComponent(parts[1]||''));
+  window.scrollTo(0,0)}
+
+/* ---------- 金鑰:網址 ?k= 優先，記在這台裝置的 localStorage，之後不帶 ?k= 也能開 ---------- */
+var KEY_LS='aesthetic_access_key';
+function lsGet(){try{return localStorage.getItem(KEY_LS)||''}catch(e){return''}}
+function lsSet(v){try{if(v)localStorage.setItem(KEY_LS,v);else localStorage.removeItem(KEY_LS)}catch(e){}}
+function start(){
+  var qk=new URLSearchParams(location.search).get('k')||'';
+  if(qk)lsSet(qk);
+  S.key=qk||lsGet();
+  S.hash=decodeURIComponent(location.hash.slice(1))||'today';
+  if(!S.key){app.innerHTML='<div class="empty">這台裝置還沒有金鑰，請用審美教練給你、網址後面帶 ?k= 的連結開一次，之後就會記住</div>';return}
+  call('api_getData',S.key).then(function(d){S.items=d.items||[];S.responses=d.responses||{};S.taste=d.taste||[];S.loaded=true;S.routed=true;route()})
+    .catch(function(err){var m=String(err&&err.message||err);
+      if(/金鑰/.test(m)&&!qk)lsSet('');
+      app.innerHTML='<div class="empty">讀不到資料:'+esc(m)+'</div>'})}
+start();
+})();
+</script>
+</body>
+</html>
